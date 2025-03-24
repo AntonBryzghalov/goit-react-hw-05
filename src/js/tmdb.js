@@ -40,6 +40,6 @@ export async function getMovieReviews(movie_id) {
   return response.data;
 }
 
-export function getCoverImage(localPath) {
+export function getFullImageUrl(localPath) {
   return `https://image.tmdb.org/t/p/w500/${localPath}`;
 }

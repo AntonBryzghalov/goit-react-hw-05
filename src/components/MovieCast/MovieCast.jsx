@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { errorMessage, getCoverImage, getMovieCredits } from "../../js/tmdb";
+import { errorMessage, getFullImageUrl, getMovieCredits } from "../../js/tmdb";
 import css from "./MovieCast.module.css";
 
 function MovieCast() {
@@ -42,18 +42,18 @@ function MovieCast() {
         </div>
       ) : (
         <ul className={css.credits}>
-          {credits.map((actorInfo) => printCastItem(actorInfo))}
+          {credits.map((actorInfo) => renderCastItem(actorInfo))}
         </ul>
       )}
     </>
   );
 }
 
-function printCastItem(actorInfo) {
+function renderCastItem(actorInfo) {
   return (
     <li key={actorInfo.id} className={css["actor-info"]}>
       <img
-        src={getCoverImage(actorInfo.profile_path)}
+        src={getFullImageUrl(actorInfo.profile_path)}
         alt={actorInfo.name}
         className={css.photo}
       />

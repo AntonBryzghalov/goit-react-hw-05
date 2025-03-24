@@ -1,16 +1,37 @@
-import { useState } from "react";
-import css from "./MoviesPage.module.css";
+import { useEffect, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { findMovies as findMoviesBy } from "../../js/tmdb";
-import MoviesList from "../../components/MoviesList/MoviesList";
+import MovieList from "../../components/MovieList/MovieList";
+import css from "./MoviesPage.module.css";
 
 function MoviesPage() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [movies, setMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get("search") ?? "";
 
-  async function searchMovies() {
-    if (searchQuery.length === 0) return { results: [] };
-    return await findMoviesBy(searchQuery);
-  }
+  useEffect(() => {
+    async function getMoviesInternal() {
+      setIsLoading(true);
+      setError(false);
+      setMovies([]);
+
+      try {
+        if (searchQuery.length === 0) return;
+        const data = await findMoviesBy(searchQuery);
+        setMovies(data.results);
+      } catch {
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    getMoviesInternal();
+  }, [searchQuery]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -24,7 +45,9 @@ function MoviesPage() {
       return;
     }
 
-    setSearchQuery(query);
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("search", query);
+    setSearchParams(newParams);
   }
 
   return (
@@ -40,13 +63,15 @@ function MoviesPage() {
         <button type="submit">Search</button>
       </form>
       <Toaster />
-      <MoviesList
-        caption={
-          searchQuery.length > 0 ? `Search results for "${searchQuery}"` : null
-        }
-        getMovies={searchMovies}
-        showHelpers={searchQuery.length > 0}
-      />
+      {searchQuery.length > 0 && (
+        <MovieList
+          caption={`Search results for "${searchQuery}"`}
+          movies={movies}
+          location={location}
+          isLoading={isLoading}
+          error={error}
+        />
+      )}
     </>
   );
 }

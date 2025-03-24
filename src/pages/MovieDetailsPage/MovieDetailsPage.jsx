@@ -5,15 +5,17 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import { errorMessage, getCoverImage, getMovieDetails } from "../../js/tmdb";
-import { useEffect, useState } from "react";
+import { errorMessage, getFullImageUrl, getMovieDetails } from "../../js/tmdb";
+import { useEffect, useRef, useState } from "react";
 import css from "./MovieDetailsPage.module.css";
 import clsx from "clsx";
+import { Suspense } from "react";
 
 function MovieDetailsPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { movieId } = useParams();
+  const backLinkRef = useRef(location.state);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -38,7 +40,7 @@ function MovieDetailsPage() {
     getMovieDetailsInternal();
   }, [movieId]);
 
-  const goBack = () => navigate(location.state ?? "/movies");
+  const goBack = () => navigate(backLinkRef.current ?? "/movies");
   const getReleaseYear = (movie) => movie.release_date.substring(0, 4);
   const getScore = (movie) => movie["vote_average"] * 10;
   const getGenresString = (movie) => {
@@ -59,7 +61,7 @@ function MovieDetailsPage() {
         {movie && (
           <div className={css.info}>
             <div className={css.image}>
-              <img src={getCoverImage(movie.poster_path)} alt="poster" />
+              <img src={getFullImageUrl(movie.poster_path)} alt="poster" />
             </div>
             <div className={css.description}>
               <h2>
@@ -89,7 +91,10 @@ function MovieDetailsPage() {
           </li>
         </ul>
       </div>
-      <Outlet />
+
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 }

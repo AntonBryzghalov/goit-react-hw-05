@@ -41,14 +41,14 @@ function MovieReviews() {
         </div>
       ) : (
         <ul className={css.reviews}>
-          {reviews.map((review) => printReviewItem(review))}
+          {reviews.map((review) => renderReviewItem(review))}
         </ul>
       )}
     </>
   );
 }
 
-function printReviewItem(review) {
+function renderReviewItem(review) {
   return (
     <li key={review.id} className={css.review}>
       <h3>Author: {review.author}</h3>

@@ -1,0 +1,21 @@
+.credits {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.actor-info {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  border: 1px dotted grey;
+}
+
+.photo {
+  width: 100px;
+}
+
+.info {
+  line-height: 1.5;
+}

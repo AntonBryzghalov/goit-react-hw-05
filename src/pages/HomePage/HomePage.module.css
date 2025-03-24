@@ -1,0 +1,19 @@
+.container {
+  padding: 30px;
+}
+
+.movies {
+  list-style: circle;
+  padding-left: 2em;
+  padding-top: 10px;
+}
+
+.link {
+  color: blue;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: #38f;
+  text-decoration: none;
+}

@@ -1,0 +1,10 @@
+.message {
+  padding: 30px;
+  font-size: 22px;
+  color: #f00;
+}
+
+.link {
+  color: blue;
+  text-decoration: underline;
+}

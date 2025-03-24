@@ -1,0 +1,27 @@
+.container {
+  border-bottom: 1px solid black;
+}
+
+.info {
+  display: flex;
+}
+
+.back {
+  padding: 4px 8px;
+}
+
+.image {
+  width: 520px;
+  padding: 10px;
+}
+
+.description {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.links {
+  padding: 20px;
+}

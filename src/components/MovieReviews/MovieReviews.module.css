@@ -1,0 +1,11 @@
+.reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.review {
+  padding-bottom: 10px;
+  border-bottom: 1px dotted grey;
+}

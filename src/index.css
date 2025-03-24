@@ -38,3 +38,23 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+/* Site specific */
+
+.dotted-list {
+  list-style: circle;
+  padding-left: 2em;
+  padding-top: 10px;
+  line-height: 1.5;
+}
+
+.generic-link {
+  color: blue;
+  text-decoration: underline;
+}
+
+.generic-link:hover,
+.generic-link:visited {
+  color: #38f;
+  text-decoration: none;
+}
